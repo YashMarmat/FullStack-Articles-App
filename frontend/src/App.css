@@ -1,0 +1,9 @@
+.justify-description-css {
+    text-align: justify;
+    white-space: pre-line;
+}
+
+.margin-css {
+    display: flex;
+    margin-top: 80px;
+}
