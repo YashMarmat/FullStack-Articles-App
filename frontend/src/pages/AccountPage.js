@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
-import { Container, Row, Col } from 'react-bootstrap'
+import React, { useEffect, useState } from 'react'
+import { Container, Row, Col, Modal, Button, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUserAccount } from '../actions/userActions'
+import { getUserAccount, deleteUserAccount } from '../actions/userActions'
 import { UPDATE_USER_ACCOUNT_RESET } from '../constants'
 
 
@@ -16,6 +16,13 @@ function AccountPage({ history }) {
     // reducer
     const getAccountReducer = useSelector(state => state.getAccountReducer)
     const { user } = getAccountReducer
+
+    const [myPassword, setMyPassword] = useState("")
+
+    // modal state and functions
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     useEffect(() => {
         if (!userInfo) {
@@ -49,7 +56,11 @@ function AccountPage({ history }) {
                 </Row>
             </Container>
             <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Link to={`/account/update`}>Update Account details </Link>
+                <Link to={`/account/update`}>Update Account details</Link>
+                <span className="ml-1 text-primary">| </span>
+                <span className="ml-1"></span>
+                {/* <button onClick = {() => accountDeleteConfirmation(user.id)}>Delete Account</button> */}
+                <Link to = {`account/delete/`}>Delete Account</Link>
             </span>
         </div>
     )

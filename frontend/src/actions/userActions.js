@@ -11,11 +11,16 @@ import {
     USER_ACCOUNT_REQUEST,
     USER_ACCOUNT_SUCCESS,
     USER_ACCOUNT_FAIL,
+    USER_ACCOUNT_RESET,
 
     UPDATE_USER_ACCOUNT_REQUEST,
     UPDATE_USER_ACCOUNT_SUCCESS,
     UPDATE_USER_ACCOUNT_FAIL,
     UPDATE_USER_ACCOUNT_RESET,
+
+    USER_ACCOUNT_DELETE_REQUEST,
+    USER_ACCOUNT_DELETE_SUCCESS,
+    USER_ACCOUNT_DELETE_FAIL,
 
 } from '../constants/index'
 
@@ -177,6 +182,53 @@ export const userAccountUpdate = (user) => async (dispatch, getState) => {
             error: error.response && error.response.data.detail
                 ? error.response.data.detail
                 : error.message
+        })
+    }
+}
+
+
+// delete user account
+export const deleteUserAccount = (userData) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: USER_ACCOUNT_DELETE_REQUEST
+        })
+
+        const {
+            userLoginReducer: { userInfo },
+        } = getState()
+
+        const config = {
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        const { data } = await axios.delete(
+            `/api/users/account/delete/${userData}/`,
+            config
+        )
+
+        dispatch({
+            type: USER_ACCOUNT_DELETE_SUCCESS,
+            payload: data,
+        })
+
+        localStorage.removeItem('userInfo')
+
+        dispatch({
+            type: USER_ACCOUNT_RESET
+        })
+        
+        dispatch({
+            type: USER_LOGOUT
+        })
+
+    } catch (error) {
+        dispatch({
+            type: USER_ACCOUNT_DELETE_FAIL,
+            payload: error.message
         })
     }
 }

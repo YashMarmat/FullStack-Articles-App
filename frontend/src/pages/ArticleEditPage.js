@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { articleDetails, articleEdit } from '../actions/articleActions'
 import { ARTICLE_DETAILS_REQUEST } from '../constants'
+import {Link} from 'react-router-dom'
 
 
 function ArticleEditPage({ match, history }) {
@@ -68,9 +69,14 @@ function ArticleEditPage({ match, history }) {
                     />
                 </label>
                 <br />
-                <button title="save post" className="btn btn-success ml-3">
+                <button className="btn btn-success ml-3">
                     save
-            </button>
+                </button>
+                <Link to={`/articles/${article.id}/`}>
+                    <button className = "btn btn-primary ml-2" type="button">
+                        Cancel
+                    </button>
+                </Link>
             </form>
         </div>
     )

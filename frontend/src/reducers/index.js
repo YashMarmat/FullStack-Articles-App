@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux'
 import {articleListReducers, articleDetailsReducer, articleCreateReducer, articleDeleteReducer, articleEditReducer} from './articleReducers'
-import {userLoginReducer, userRegisterReducer, getAccountReducer, updateAccountReducer} from './userReducers'
+import {userLoginReducer, userRegisterReducer, getAccountReducer, updateAccountReducer, userDeleteReducer} from './userReducers'
 
 const allReducers = combineReducers({
     articleListReducers,
@@ -11,7 +11,8 @@ const allReducers = combineReducers({
     articleDeleteReducer,
     articleEditReducer,
     getAccountReducer,
-    updateAccountReducer,    
+    updateAccountReducer,
+    userDeleteReducer,    
 })
 
 export default allReducers

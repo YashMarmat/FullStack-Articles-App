@@ -10,6 +10,7 @@ import ArticleCreatePage from './pages/ArticleCreatePage'
 import ArticleEditPage from './pages/ArticleEditPage';
 import AccountPage from './pages/AccountPage'
 import AccountUpdatePage from './pages/AccountUpdatePage'
+import DeleteUserAccount from './pages/DeleteUserAccount'
 import DemoPage from './pages/DemoPage'
 
 
@@ -23,6 +24,7 @@ function App() {
       <Route path = "/demoPage" component = {DemoPage} exact />
       <Route path = "/account" component = {AccountPage} exact />
       <Route path = "/account/update/" component = {AccountUpdatePage} exact />
+      <Route path = "/account/delete/" component = {DeleteUserAccount} exact />
       <Route path = "/articles" component = {HomePage} exact />
       <Route path = "/login" component = {LoginPage} exact />
       <Route path = "/register" component = {RegisterPage} exact />

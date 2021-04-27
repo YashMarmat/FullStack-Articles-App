@@ -11,6 +11,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView # for login page
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
 
+from django.contrib.auth.hashers import check_password
+
 # get all articles
 @api_view(['GET'])
 def getArticles(request):
@@ -21,9 +23,13 @@ def getArticles(request):
 # get article details
 @api_view(['GET'])
 def getArticleDetails(request, pk):
-    article = Article.objects.get(id=pk)
-    serializer = ArticleSerializer(article, many=False)
-    return Response(serializer.data)
+    try:
+        article = Article.objects.get(id=pk)
+        serializer = ArticleSerializer(article, many=False)
+        return Response(serializer.data)
+    except:
+        message = {'detail': 'Article Not Found'}
+        return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 # create article
 @api_view(['POST'])
@@ -31,6 +37,8 @@ def getArticleDetails(request, pk):
 def createArticle(request):
     user = request.user
     data = request.data
+
+    print(data)
 
     article = Article.objects.create(
         user=user,
@@ -71,6 +79,8 @@ def editArticle(request, pk):
     user = request.user
     data = request.data
     article = Article.objects.get(id=pk)
+
+    print(data)
 
     # note: this is how we can get previous data
     #serializer = ArticleSerializer(article, many=False)
@@ -130,6 +140,8 @@ def updateUserAccount(request):
     serializer = UserSerializerWithToken(user, many=False)
     data = request.data
 
+    print(data)
+
     user.username = data['email']
     user.email = data['email']
 
@@ -156,3 +168,29 @@ def registerUser(request):
     except:
         message = {'detail': 'User with this email already exists'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def deleteUserAccount(request, pk):
+    my_string=pk
+    myid = my_string.split(",",1)[0]
+    mypass = my_string.split(",",1)[1]
+    print(myid, mypass)
+
+    user = request.user
+    data = request.data
+    print(data)
+
+    deleteUser = User.objects.get(id=myid)
+    deleteUserPass = deleteUser.password
+
+    passwordCheck = check_password(mypass, deleteUserPass)
+
+    try:
+        if user == deleteUser and passwordCheck == True:
+            deleteUser.delete()
+            return Response("User Deleted")
+    except:
+        message = 'Invalid Password'
+        return Response(message, status=status.HTTP_400_BAD_REQUEST)   

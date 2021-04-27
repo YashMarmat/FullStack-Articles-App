@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { articleCreate } from '../actions/articleActions'
+import { Link } from 'react-router-dom'
 
 
 function ArticleCreatePage({ history }) {
@@ -18,7 +19,7 @@ function ArticleCreatePage({ history }) {
 
   // reducer
   const userLoginReducer = useSelector(state => state.userLoginReducer)
-  const {userInfo} = userLoginReducer
+  const { userInfo } = userLoginReducer
 
   useEffect(() => {
     if (!userInfo) {
@@ -54,9 +55,17 @@ function ArticleCreatePage({ history }) {
           />
         </label>
         <br />
-        <button title="save post" className="btn btn-success ml-3">
-          save
-            </button>
+        <button type = "submit" className="btn btn-success ml-3">
+          Save
+        </button>
+
+        <Link to="/articles">
+          <button className = "btn btn-primary ml-2" type="button">
+            Cancel
+          </button>
+        </Link>
+
+
       </form>
     </div>
   );

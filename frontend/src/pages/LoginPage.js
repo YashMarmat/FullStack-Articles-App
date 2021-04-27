@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { login } from '../actions/userActions'
+import Message from '../components/Message';
 
 
 function LoginPage({ history }) {
@@ -23,9 +24,6 @@ function LoginPage({ history }) {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        if (error) {
-            alert(error)
-        }
         dispatch(login(email, password))
     }
 
@@ -33,7 +31,8 @@ function LoginPage({ history }) {
         <div>
             <Row className='justify-content-md-center'>
                 <Col xs={12} md={6}>                    
-                    <h1>Sign In</h1>
+                    <h1>Sign In</h1>                    
+                    {error && <Message variant='danger'>{error}</Message>}
                     <Form onSubmit={submitHandler}>
                         <Form.Group controlId='email'>
                             <Form.Label>

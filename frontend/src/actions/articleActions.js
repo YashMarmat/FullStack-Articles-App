@@ -151,6 +151,8 @@ export const articleEdit = (articleData) => async (dispatch, getState) => {
     const title = articleData.updatedTitle
     const description = articleData.updatedDescription
     const article = {title, description}
+
+    console.log(typeof(id))
     
     try {
         dispatch({

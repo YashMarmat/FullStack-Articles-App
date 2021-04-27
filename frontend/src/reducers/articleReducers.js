@@ -6,6 +6,7 @@ import {
     ARTICLE_DETAILS_REQUEST,
     ARTICLE_DETAILS_SUCCESS,
     ARTICLE_DETAILS_FAIL,
+    ARTICLE_DETAILS_RESET,
 
     ARTICLES_CREATE_REQUEST,
     ARTICLES_CREATE_SUCCESS,
@@ -66,6 +67,11 @@ export const articleDetailsReducer = (state = { article: {} }, action) => {
                 loading: false,
                 error: action.payload
             }
+        case ARTICLE_DETAILS_RESET:
+            return { 
+                article: {} 
+            }        
+    
         default:
             return state
     }

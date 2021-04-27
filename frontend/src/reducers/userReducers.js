@@ -11,11 +11,17 @@ import {
     USER_ACCOUNT_REQUEST,
     USER_ACCOUNT_SUCCESS,
     USER_ACCOUNT_FAIL,
+    USER_ACCOUNT_RESET,
 
     UPDATE_USER_ACCOUNT_REQUEST,
     UPDATE_USER_ACCOUNT_SUCCESS,
     UPDATE_USER_ACCOUNT_FAIL,
     UPDATE_USER_ACCOUNT_RESET,
+
+    
+    USER_ACCOUNT_DELETE_REQUEST,
+    USER_ACCOUNT_DELETE_SUCCESS,
+    USER_ACCOUNT_DELETE_FAIL,
 
 } from '../constants/index'
 
@@ -92,6 +98,8 @@ export const getAccountReducer = (state = { user: {} }, action) => {
                 loading: false,
                 error: action.payload
             }
+        case USER_ACCOUNT_RESET:
+            return {}
         default:
             return state
     }
@@ -119,6 +127,29 @@ export const updateAccountReducer = (state = {}, action) => {
         case UPDATE_USER_ACCOUNT_RESET:
             return {}
 
+        default:
+            return state
+    }
+}
+
+// delete user account
+export const userDeleteReducer = (state = {}, action) => {
+    switch (action.type) {
+        case USER_ACCOUNT_DELETE_REQUEST:
+            return {
+                loading: true,
+            }
+        case USER_ACCOUNT_DELETE_SUCCESS:
+            return {
+                loading: false,
+                success: true,
+                user: action.payload               
+            }
+        case USER_ACCOUNT_DELETE_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
         default:
             return state
     }

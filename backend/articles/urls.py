@@ -15,4 +15,5 @@ urlpatterns = [
     path('users/account/', views.getUserAccount, name = "account"),
     path('users/account/update/', views.updateUserAccount, name = "account-update"),
     path('users/register/', views.registerUser, name = "register"),
+    path('users/account/delete/<str:pk>/', views.deleteUserAccount, name = "account-delete"),
 ]
