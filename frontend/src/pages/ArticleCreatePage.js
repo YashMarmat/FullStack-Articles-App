@@ -2,19 +2,26 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { articleCreate } from '../actions/articleActions'
 import { Link } from 'react-router-dom'
+import { MDBBadge, MDBContainer } from "mdbreact";
 
 
 function ArticleCreatePage({ history }) {
   const dispatch = useDispatch()
 
+  const [cover, setCover] = useState(null)
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
 
   const onSubmit = (e) => {
     e.preventDefault()
-    dispatch(articleCreate(title, description))
+    let form_data = new FormData()
+    form_data.append('title', title)
+    form_data.append('description', description)
+    form_data.append('cover', cover, cover.name)
+    dispatch(articleCreate(form_data))
     alert("Article Created!")
     history.push("/articles")
+    window.location.reload()
   }
 
   // reducer
@@ -30,37 +37,54 @@ function ArticleCreatePage({ history }) {
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <h2>New Article</h2>
-        <label className="col-sm-12 col-form-label">
+        <span
+          className="d-flex justify-content-center"
+          style={{ display: "flex", marginBottom: "15px", color: "#008080" }}>
+          <em>New Article</em>
+        </span>
+
+        <label className="col-form-label">
+          <b>Thumbnail Image File</b>
+        </label>
+        <p>
+          <input type="file"
+            id="covers"
+            onChange={(e) => setCover(e.target.files[0])}
+            required
+          />
+        </p>
+
+        <label className="col-form-label">
           <b>Title</b>
-          <input
-            className="form-control form-control-sm"
-            autoFocus={true}
-            type="text"
-            placeholder="title"
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
         </label>
+        <input
+          className="form-control form-control-sm"
+          autoFocus={true}
+          type="text"
+          placeholder="title"
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
         <br />
-        <label className="col-sm-12 col-form-label">
+        <label className="col-form-label">
           <b>Description</b>
-          <textarea
-            className="form-control form-control-sm"
-            placeholder="description"
-            onChange={(e) => setDescription(e.target.value)}
-            rows="16"
-            cols="41"
-            required
-          />
         </label>
+        <textarea
+          className="form-control form-control-sm"
+          placeholder="description"
+          onChange={(e) => setDescription(e.target.value)}
+          rows="15"
+          cols="41"
+          required
+        />
+
         <br />
-        <button type = "submit" className="btn btn-success ml-3">
+        <button type="submit" className="btn btn-success mb-2">
           Save
         </button>
 
         <Link to="/articles">
-          <button className = "btn btn-primary ml-2" type="button">
+          <button className="btn btn-primary ml-2 mb-2" type="button">
             Cancel
           </button>
         </Link>

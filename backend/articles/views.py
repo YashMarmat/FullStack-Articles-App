@@ -44,7 +44,10 @@ def createArticle(request):
         user=user,
         title=data["title"],
         description=data["description"],
+        cover=data['cover']
     )
+
+    print(article)
 
     serializer = ArticleSerializer(article, many=False)
     return Response(serializer.data)
@@ -97,7 +100,18 @@ def editArticle(request, pk):
         return Response(serializer.data)    
     else:
         return Response("Forbidden")
-        
+
+# edit article picture
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def editArticlePicture(request, pk):
+    data = request.data
+    article = Article.objects.get(id=pk)
+    article.cover = request.FILES.get('cover')
+    article.save()
+
+    return Response('Image Updated Successfully')
+
 # user
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     
@@ -169,7 +183,7 @@ def registerUser(request):
         message = {'detail': 'User with this email already exists'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
-
+# delete user (normal users)
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def deleteUserAccount(request, pk):
@@ -194,3 +208,31 @@ def deleteUserAccount(request, pk):
     except:
         message = 'Invalid Password'
         return Response(message, status=status.HTTP_400_BAD_REQUEST)   
+
+
+# change user admin status
+@api_view(["PUT"])
+@permission_classes([IsAdminUser])
+def makeUserAdmin(request, pk):
+    user = User.objects.get(id=pk)
+    data = request.data
+
+    user.first_name = data['name']
+    user.username = data['email']
+    user.email = data['email']
+    user.is_staff = data['isAdmin']
+
+    user.save()
+    serializer = UserSerializer(user, many=False)
+
+    return Response(serializer.data)
+
+# delete user (admin)
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteUserByAdmin(request, pk):
+    deleteUser = User.objects.get(id=pk)
+
+    deleteUser.delete()
+    return Response("User Deleted")
+    

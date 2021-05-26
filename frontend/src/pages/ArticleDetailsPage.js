@@ -65,7 +65,11 @@ function ArticleDetailsPage({ history, match }) {
                             <>
                                 <Modal show={show} onHide={handleClose}>
                                     <Modal.Header closeButton>
-                                        <Modal.Title>Delete Confirmation</Modal.Title>
+                                        <Modal.Title>
+                                            <i style = {{ color: "#e6e600" }} className="fas fa-exclamation-triangle"></i>
+                                            {" "}
+                                            Delete Confirmation
+                                        </Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>Are you sure you want to delete the article "{article.title}"?</Modal.Body>
                                     <Modal.Footer>
@@ -82,8 +86,8 @@ function ArticleDetailsPage({ history, match }) {
 
                         {/* Modal End */}
 
-                        <div class="d-flex justify-content-center">
-                            <p><strong className = "text-capitalize">{article.title}</strong>
+                        <div className="d-flex justify-content-center">
+                            <p><strong className="text-capitalize">{article.title}</strong>
                                 {article.user
                                     ?
                                     <span style={{ color: "grey" }}>{" "}<em>

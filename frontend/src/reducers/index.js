@@ -1,10 +1,30 @@
 import {combineReducers} from 'redux'
-import {articleListReducers, articleDetailsReducer, articleCreateReducer, articleDeleteReducer, articleEditReducer} from './articleReducers'
-import {userLoginReducer, userRegisterReducer, getAccountReducer, updateAccountReducer, userDeleteReducer} from './userReducers'
+import {
+    articleListReducers, 
+    articleDetailsReducer, 
+    articleCreateReducer, 
+    articleDeleteReducer, 
+    articleEditReducer, 
+    editImageReducer
+
+} from './articleReducers'
+
+import {
+    userLoginReducer, 
+    userRegisterReducer, 
+    getAccountReducer, 
+    updateAccountReducer, 
+    userDeleteReducer,
+    allUsersDetailReducer,
+    changeAdminStatusReducer,
+    deleteUserByAdminReducer
+
+} from './userReducers'
 
 const allReducers = combineReducers({
     articleListReducers,
     articleDetailsReducer,
+    editImageReducer,
     userLoginReducer,
     userRegisterReducer,
     articleCreateReducer,
@@ -12,7 +32,10 @@ const allReducers = combineReducers({
     articleEditReducer,
     getAccountReducer,
     updateAccountReducer,
-    userDeleteReducer,    
+    userDeleteReducer,
+    allUsersDetailReducer,
+    changeAdminStatusReducer,
+    deleteUserByAdminReducer    
 })
 
 export default allReducers

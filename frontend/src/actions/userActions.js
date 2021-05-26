@@ -22,6 +22,18 @@ import {
     USER_ACCOUNT_DELETE_SUCCESS,
     USER_ACCOUNT_DELETE_FAIL,
 
+    ALL_USERS_DETAIL_REQUEST,
+    ALL_USERS_DETAIL_SUCCESS,
+    ALL_USERS_DETAIL_FAIL,
+
+    CHANGE_ADMIN_STATUS_REQUEST,
+    CHANGE_ADMIN_STATUS_SUCCESS,
+    CHANGE_ADMIN_STATUS_FAIL,
+
+    DELETE_USER_BY_ADMIN_REQUEST,
+    DELETE_USER_BY_ADMIN_SUCCESS,
+    DELETE_USER_BY_ADMIN_FAIL,
+
 } from '../constants/index'
 
 import axios from 'axios'
@@ -179,7 +191,7 @@ export const userAccountUpdate = (user) => async (dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: UPDATE_USER_ACCOUNT_FAIL,
-            error: error.response && error.response.data.detail
+            payload: error.response && error.response.data.detail
                 ? error.response.data.detail
                 : error.message
         })
@@ -228,7 +240,122 @@ export const deleteUserAccount = (userData) => async (dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: USER_ACCOUNT_DELETE_FAIL,
-            payload: error.message
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail
+                : error.message
+        })
+    }
+}
+
+
+// get all the users
+export const getAllUsers = () => async (dispatch, getState) => {
+    try {
+        
+        dispatch({
+            type: ALL_USERS_DETAIL_REQUEST
+        })
+
+        const {
+            userLoginReducer: {userInfo},
+        } = getState()
+
+
+        const config = {
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        const {data} = await axios.get("/api/users/", config)
+
+        dispatch({
+            type: ALL_USERS_DETAIL_SUCCESS,
+            payload: data
+        })        
+        
+    } catch (error) {
+        dispatch({
+            type: ALL_USERS_DETAIL_FAIL,
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail
+                : error.message
+        })
+    }
+}
+
+// change user admin status
+export const changeAdminStatus = (user) => async (dispatch, getState) => {
+    try {
+        
+        dispatch({
+            type: CHANGE_ADMIN_STATUS_REQUEST
+        })
+
+        const {
+            userLoginReducer: {userInfo},
+        } = getState()
+
+
+        const config = {
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        const {data} = await axios.put(`/api/${user.id}/admin-update/`, user, config)
+
+        dispatch({
+            type: CHANGE_ADMIN_STATUS_SUCCESS,
+            payload: data
+        })        
+        
+    } catch (error) {
+        dispatch({
+            type: CHANGE_ADMIN_STATUS_FAIL,
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail
+                : error.message
+        })
+    }
+}
+
+// delete user (admin side)
+export const deleteUserByAdmin = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: DELETE_USER_BY_ADMIN_REQUEST
+        })
+
+        const {
+            userLoginReducer: { userInfo },
+        } = getState()
+
+        const config = {
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        const { data } = await axios.delete(
+            `/api/${id}/delete-user/`,
+            config
+        )
+
+        dispatch({
+            type: DELETE_USER_BY_ADMIN_SUCCESS,
+            payload: data,
+        })
+
+    } catch (error) {
+        dispatch({
+            type: DELETE_USER_BY_ADMIN_FAIL,
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail
+                : error.message
         })
     }
 }

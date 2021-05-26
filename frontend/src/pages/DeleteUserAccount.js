@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Row, Col, Modal, Button, Form } from 'react-bootstrap'
+import { Row, Col, Button, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteUserAccount, getUserAccount } from '../actions/userActions'
 import Message from '../components/Message'
@@ -19,7 +19,7 @@ function DeleteUserAccount({ history }) {
 
     // user details reducer
     const userDeleteReducer = useSelector(state => state.userDeleteReducer)
-    const { error, success } = userDeleteReducer
+    const { error } = userDeleteReducer
 
 
     useEffect(() => {
@@ -28,7 +28,7 @@ function DeleteUserAccount({ history }) {
             alert("Account Successfully Deleted!")
         }
         dispatch(getUserAccount('account'))
-    }, [history, userInfo])
+    }, [history, userInfo, dispatch])
 
     const onSubmit = (e) => {
         e.preventDefault()

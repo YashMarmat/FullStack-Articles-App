@@ -23,6 +23,18 @@ import {
     USER_ACCOUNT_DELETE_SUCCESS,
     USER_ACCOUNT_DELETE_FAIL,
 
+    ALL_USERS_DETAIL_REQUEST,
+    ALL_USERS_DETAIL_SUCCESS,
+    ALL_USERS_DETAIL_FAIL,
+
+    CHANGE_ADMIN_STATUS_REQUEST,
+    CHANGE_ADMIN_STATUS_SUCCESS,
+    CHANGE_ADMIN_STATUS_FAIL,
+
+    DELETE_USER_BY_ADMIN_REQUEST,
+    DELETE_USER_BY_ADMIN_SUCCESS,
+    DELETE_USER_BY_ADMIN_FAIL,
+    
 } from '../constants/index'
 
 // Login
@@ -147,6 +159,84 @@ export const userDeleteReducer = (state = {}, action) => {
             }
         case USER_ACCOUNT_DELETE_FAIL:
             return {
+                loading: false,
+                error: action.payload
+            }
+        default:
+            return state
+    }
+}
+
+// all users detail
+export const allUsersDetailReducer = (state = { users: [] }, action) => {
+    switch (action.type) {
+        case ALL_USERS_DETAIL_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+        case ALL_USERS_DETAIL_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                users: action.payload,
+                error: ""                
+            }
+        case ALL_USERS_DETAIL_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+        default:
+            return state
+    }
+}
+
+
+// change admin user status
+export const changeAdminStatusReducer = (state = {}, action) => {
+    switch (action.type) {
+        case CHANGE_ADMIN_STATUS_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+        case CHANGE_ADMIN_STATUS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                user: action.payload,
+                error: ""                
+            }
+        case CHANGE_ADMIN_STATUS_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+        default:
+            return state
+    }
+}
+
+// delete user (admin side)
+export const deleteUserByAdminReducer = (state = {}, action) => {
+    switch (action.type) {
+        case DELETE_USER_BY_ADMIN_REQUEST:
+            return {
+                loading: true,
+            }
+        case DELETE_USER_BY_ADMIN_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                success: true,
+                error: ""
+            }
+        case DELETE_USER_BY_ADMIN_FAIL:
+            return {
+                ...state,
                 loading: false,
                 error: action.payload
             }

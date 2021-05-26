@@ -26,6 +26,19 @@
     transition: transform .2s; /* Animation */
 }
 
+
+.user-delete-button {
+    position: relative;
+    color: grey;
+    cursor: pointer;
+    transition: transform .2s; /* Animation */
+}
+
+.user-delete-button:hover {
+    color: red;
+    transform: scale(1.3)
+}
+
 .edit-button-css:hover {
     color: #6699ff;
     transform: scale(1.3)
@@ -38,4 +51,21 @@
 .card-zoom-css:hover {
     transition: transform .2s; /* Animation */
     transform: scale(1.1);
+}
+
+.home-page-title {
+    font-size: 45px;
+    color: grey;
+}
+  
+.home-css {
+padding-top: 200px;
+}
+
+
+/* to turn off nav dropdown color */
+@media (max-width:767px) {
+    .navbar-nav .open .dropdown-menu {
+      background-color:#fff;
+    }
 }

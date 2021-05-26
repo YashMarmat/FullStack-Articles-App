@@ -20,6 +20,10 @@ import {
     ARTICLE_EDIT_SUCCESS,
     ARTICLE_EDIT_FAIL,
 
+    ARTICLE_IMAGE_EDIT_REQUEST,
+    ARTICLE_IMAGE_EDIT_SUCCESS,
+    ARTICLE_IMAGE_EDIT_FAIL,
+
 } from '../constants/index'
 
 // to get all articles
@@ -68,7 +72,7 @@ export const articleDetails = (id) => async (dispatch) => {
 }
 
 // create article
-export const articleCreate = (title, description) => async (dispatch, getState) => {
+export const articleCreate = (form_data) => async (dispatch, getState) => {
     try {
         dispatch({
             type: ARTICLES_CREATE_REQUEST
@@ -80,14 +84,15 @@ export const articleCreate = (title, description) => async (dispatch, getState) 
 
         const config = {
             headers: {
-                'Content-type': 'application/json',
+                //'Content-type': 'application/json',
+                'content-type': 'multipart/form-data',
                 Authorization: `Bearer ${userInfo.token}`
             }
         }
 
         const { data } = await axios.post(
             `/api/article-create/`,
-            { 'title': title, 'description': description },
+            form_data,
             config
         )
 
@@ -150,10 +155,8 @@ export const articleEdit = (articleData) => async (dispatch, getState) => {
     const id = articleData.articleID
     const title = articleData.updatedTitle
     const description = articleData.updatedDescription
-    const article = {title, description}
+    const article = { title, description }
 
-    console.log(typeof(id))
-    
     try {
         dispatch({
             type: ARTICLE_EDIT_REQUEST
@@ -180,6 +183,46 @@ export const articleEdit = (articleData) => async (dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: ARTICLE_EDIT_FAIL,
+            error: error.response && error.response.data.detail
+                ? error.response.data.detail
+                : error.message
+        })
+    }
+}
+
+// article image edit
+export const editArticleImage = (id, form_data) => async (dispatch, getState) => {
+    try {
+
+        dispatch({
+            type: ARTICLE_IMAGE_EDIT_REQUEST
+        })
+
+        const {
+            userLoginReducer: { userInfo },
+        } = getState()
+
+        const config = {
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        const {data} = await axios.post(
+            `/api/articles/${id}/upload/`,
+            form_data,
+            config
+        )
+
+        dispatch({
+            type: ARTICLE_IMAGE_EDIT_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: ARTICLE_IMAGE_EDIT_FAIL,
             error: error.response && error.response.data.detail
                 ? error.response.data.detail
                 : error.message

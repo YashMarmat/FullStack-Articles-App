@@ -20,6 +20,10 @@ import {
     ARTICLE_EDIT_SUCCESS,
     ARTICLE_EDIT_FAIL,
 
+    ARTICLE_IMAGE_EDIT_REQUEST,
+    ARTICLE_IMAGE_EDIT_SUCCESS,
+    ARTICLE_IMAGE_EDIT_FAIL,
+
 } from '../constants/index'
 
 
@@ -135,6 +139,32 @@ export const articleEditReducer = (state = {}, action) => {
             }
         case ARTICLE_EDIT_FAIL:
             return {
+                loading: false,
+                error: action.payload
+            }
+        default:
+            return state
+    }
+}
+
+// edit article image reducer
+export const editImageReducer = (state = { article: {} }, action) => {
+    switch (action.type) {
+        case ARTICLE_IMAGE_EDIT_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                article: {}
+            }
+        case ARTICLE_IMAGE_EDIT_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                article: action.payload
+            }
+        case ARTICLE_IMAGE_EDIT_FAIL:
+            return {
+                ...state,
                 loading: false,
                 error: action.payload
             }
