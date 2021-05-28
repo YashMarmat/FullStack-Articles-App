@@ -20,7 +20,7 @@ function Article({ article }) {
                     <Row>
                         <Col className="card-zoom-css" sm={4}>
                             <Link to={`/articles/${article.id}`}>
-                                <Card.Img variant="top" src={article.cover} alt="image" height="180" />
+                                <Card.Img variant="top" src={article.image} alt="image" height="180" />
                             </Link>
                         </Col>
                         <Col>

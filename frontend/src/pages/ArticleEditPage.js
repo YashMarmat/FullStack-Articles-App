@@ -3,19 +3,20 @@ import { useDispatch, useSelector } from 'react-redux'
 import { articleDetails, articleEdit, editArticleImage } from '../actions/articleActions'
 import { ARTICLE_DETAILS_REQUEST } from '../constants'
 import { Link } from 'react-router-dom'
+import { Spinner } from 'react-bootstrap'
 
 
 function ArticleEditPage({ match, history }) {
     const dispatch = useDispatch()
     const [newPic, setNewPic] = useState(false)
-    const [cover, setCover] = useState(null)
+    const [image, setImage] = useState(null)
     const [title, setTitle] = useState("")
     const [showConfirmMessage, setShowConfirmMessage] = useState(false)
     const [description, setDescription] = useState("")
 
     // reducer
     const articleDetailsReducer = useSelector(state => state.articleDetailsReducer)
-    const { article } = articleDetailsReducer
+    const { article, loading } = articleDetailsReducer
 
     // reducer
     const userLoginReducer = useSelector(state => state.userLoginReducer)
@@ -43,7 +44,7 @@ function ArticleEditPage({ match, history }) {
 
     const editImageHandler = (id) => {
         let form_data = new FormData()
-        form_data.append('cover', cover, cover.name)
+        form_data.append('image', image, image.name)
         dispatch(editArticleImage(id, form_data))
         alert("New Image Uploaded!")
         setNewPic(false)
@@ -60,6 +61,7 @@ function ArticleEditPage({ match, history }) {
                     <em>Edit Article</em>
                 </span>
 
+                {loading && <Spinner animation="border" />}
                 {showConfirmMessage
                     ?
                     <span>
@@ -69,18 +71,18 @@ function ArticleEditPage({ match, history }) {
                         </i>
                     </span>
                     :
-                    <img src={article.cover} alt={article.title} height="200" />}
+                    <img src={article.image} alt={article.title} height="200" />}
                 <br />
                 {newPic ?
                     <div>
                         <p>
                             <input type="file"
                                 className="my-2"
-                                id="edit-cover"
-                                onChange={(e) => setCover(e.target.files[0])}
+                                id="edit-image"
+                                onChange={(e) => setImage(e.target.files[0])}
                             />
                         </p>
-                        {cover !== null ?
+                        {image !== null ?
                             <div>
                                 <span onClick={() => editImageHandler(article.id)} className="btn btn-success btn-sm my-2">
                                     confirm change picture

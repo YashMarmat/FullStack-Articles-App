@@ -3,6 +3,7 @@ import { Row, Col, Button, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteUserAccount, getUserAccount } from '../actions/userActions'
 import Message from '../components/Message'
+import { Spinner } from 'react-bootstrap'
 
 
 function DeleteUserAccount({ history }) {
@@ -19,7 +20,7 @@ function DeleteUserAccount({ history }) {
 
     // user details reducer
     const userDeleteReducer = useSelector(state => state.userDeleteReducer)
-    const { error } = userDeleteReducer
+    const { error, loading } = userDeleteReducer
 
 
     useEffect(() => {
@@ -42,6 +43,7 @@ function DeleteUserAccount({ history }) {
             <Row className='justify-content-md-center'>
                 <Col xs={12} md={6}>
                     <h3>Confirm your password to delete your account.</h3>
+                    {loading && <span style = {{ display: "flex" }}><h5>Please wait</h5><span className = "ml-2"><Spinner animation="border" /></span></span>}                    
                     {error && <Message variant='danger'>Incorrect Password!</Message>}        
                     <div className="mt-4">
                         <Form onSubmit={onSubmit}>

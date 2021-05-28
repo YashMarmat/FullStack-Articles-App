@@ -57,7 +57,7 @@ function ArticleDetailsPage({ history, match }) {
 
     return (
         <div>
-            {loading ? <Spinner animation="border" /> :
+            {loading ? <span style = {{ display: "flex" }}><h5>Getting Article Details</h5><span className = "ml-2"><Spinner animation="border" /></span></span> :
                 error ? <Message variant='danger'>{error}</Message> :
                     <div>
                         {/* Modal Start*/}

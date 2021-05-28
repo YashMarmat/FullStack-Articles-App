@@ -8,7 +8,7 @@ import { MDBBadge, MDBContainer } from "mdbreact";
 function ArticleCreatePage({ history }) {
   const dispatch = useDispatch()
 
-  const [cover, setCover] = useState(null)
+  const [image, setImage] = useState(null)
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
 
@@ -17,7 +17,7 @@ function ArticleCreatePage({ history }) {
     let form_data = new FormData()
     form_data.append('title', title)
     form_data.append('description', description)
-    form_data.append('cover', cover, cover.name)
+    form_data.append('image', image, image.name)
     dispatch(articleCreate(form_data))
     alert("Article Created!")
     history.push("/articles")
@@ -48,8 +48,8 @@ function ArticleCreatePage({ history }) {
         </label>
         <p>
           <input type="file"
-            id="covers"
-            onChange={(e) => setCover(e.target.files[0])}
+            id="images"
+            onChange={(e) => setImage(e.target.files[0])}
             required
           />
         </p>

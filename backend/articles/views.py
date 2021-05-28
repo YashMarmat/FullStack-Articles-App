@@ -44,7 +44,7 @@ def createArticle(request):
         user=user,
         title=data["title"],
         description=data["description"],
-        cover=data['cover']
+        image=data['image']
     )
 
     print(article)
@@ -107,7 +107,7 @@ def editArticle(request, pk):
 def editArticlePicture(request, pk):
     data = request.data
     article = Article.objects.get(id=pk)
-    article.cover = request.FILES.get('cover')
+    article.image = request.FILES.get('image')
     article.save()
 
     return Response('Image Updated Successfully')

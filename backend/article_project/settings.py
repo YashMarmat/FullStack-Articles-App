@@ -163,10 +163,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/' # to load static images
+MEDIA_URL = '/images/' # to load media files on admin page as well
 
-MEDIA_URL = '/media/' # new
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # new
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),] # new
+
+# user uploaded media or image gets uploaded at this media root (which is media/images folder)
+MEDIA_ROOT = 'static/images'
 
 # cors origin
 CORS_ALLOW_ALL_ORIGINS = True

@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAllUsers, changeAdminStatus, deleteUserByAdmin } from '../actions/userActions'
 import { Table } from 'react-bootstrap'
 import Message from '../components/Message';
+import { Spinner } from 'react-bootstrap'
 
-// Remaining: action constant, action, reducer (note: api already built)
 
 function AllUsersPage({ history }) {
 
@@ -26,15 +26,15 @@ function AllUsersPage({ history }) {
 
     // allUsersDetailReducer
     const allUsersDetailReducer = useSelector(state => state.allUsersDetailReducer)
-    const { users, error } = allUsersDetailReducer
+    const { users, error, loading } = allUsersDetailReducer
 
     // changeAdminStatusReducer 
     const changeAdminStatusReducer = useSelector(state => state.changeAdminStatusReducer)
-    const { user: userAdmin } = changeAdminStatusReducer
+    const { user: userAdmin, loading: loadingUserStatus } = changeAdminStatusReducer
 
     // deleteUserByAdminReducer
     const deleteUserByAdminReducer = useSelector(state => state.deleteUserByAdminReducer)
-    const { success } = deleteUserByAdminReducer
+    const { success, loading: loadingDeleteStatus } = deleteUserByAdminReducer
 
     useEffect(() => {
         if (!userInfo) {
@@ -107,7 +107,9 @@ function AllUsersPage({ history }) {
 
             {/* Modal End */}
 
-
+            {loading && <span style = {{ display: "flex" }}><h5>Please wait</h5><span className = "ml-2"><Spinner animation="border" /></span></span>}
+            {loadingUserStatus && <span style = {{ display: "flex" }}><h5>Updating User Status</h5><span className = "ml-2"><Spinner animation="border" /></span></span>}
+            {loadingDeleteStatus && <span style = {{ display: "flex" }}><h5>Deleting User</h5><span className = "ml-2"><Spinner animation="border" /></span></span>}
             {error ? <Message variant='danger'>{error}</Message> :
                 <div>
                     <Table striped bordered hover>

@@ -27,7 +27,7 @@ function HomePage({ history }) {
 
     return (
         <div>
-            {loading ? <Spinner animation="border" /> :
+            {loading ? <span style = {{ display: "flex" }}><h5>Getting Articles</h5><span className = "ml-2"><Spinner animation="border" /></span></span> :
                 error ? <Message variant='danger'>{error}</Message> :
                     <span>
                         {articles.length === 0 ? "No Articles yet!" :

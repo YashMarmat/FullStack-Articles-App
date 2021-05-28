@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getUserAccount, logout } from '../actions/userActions'
 //import { UPDATE_USER_ACCOUNT_RESET } from '../constants'
 import Message from '../components/Message'
+import { Spinner } from 'react-bootstrap'
 
 
 function AccountPage({ history }) {
@@ -16,7 +17,7 @@ function AccountPage({ history }) {
 
     // reducer
     const getAccountReducer = useSelector(state => state.getAccountReducer)
-    const { user: userAccDetails } = getAccountReducer
+    const { user: userAccDetails, loading } = getAccountReducer
 
     useEffect(() => {
         if (!userInfo) {
@@ -40,6 +41,7 @@ function AccountPage({ history }) {
 
             return (
                 <div>
+                    {loading && <span style = {{ display: "flex" }}><h5>Getting User Information</h5><span className = "ml-2"><Spinner animation="border" /></span></span>}
                     <Container>
                         <Row className="mr-6 mb-2 border border-dark">
                             <Col xs={2} className="p-3 bg-info text-white">Name:</Col>

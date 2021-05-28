@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserAccount, userAccountUpdate, logout } from '../actions/userActions'
 import Message from '../components/Message'
+import { Spinner } from 'react-bootstrap'
 
 
 function AccountUpdatePage({ history }) {
@@ -20,7 +21,7 @@ function AccountUpdatePage({ history }) {
 
     // reducer
     const getAccountReducer = useSelector(state => state.getAccountReducer)
-    const { user } = getAccountReducer
+    const { user, loading } = getAccountReducer
 
     // reducer
     const updateAccountReducer = useSelector(state => state.updateAccountReducer)
@@ -68,7 +69,7 @@ function AccountUpdatePage({ history }) {
                     style={{ display: "flex", marginBottom: "15px", color: "#008080" }}>
                     <em>Update User Details</em>
                 </span>
-                            
+                {loading && <Spinner animation="border" />}
                             <Form onSubmit={onSubmit}>
 
                                 <Form.Group controlId='username'>
