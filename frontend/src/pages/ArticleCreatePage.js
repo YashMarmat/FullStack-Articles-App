@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { articleCreate } from '../actions/articleActions'
 import { Link } from 'react-router-dom'
-import { MDBBadge, MDBContainer } from "mdbreact";
+import { Spinner } from 'react-bootstrap'
+import Message from '../components/Message';
 
 
 function ArticleCreatePage({ history }) {
@@ -19,14 +20,20 @@ function ArticleCreatePage({ history }) {
     form_data.append('description', description)
     form_data.append('image', image, image.name)
     dispatch(articleCreate(form_data))
-    alert("Article Created!")
-    history.push("/articles")
-    window.location.reload()
+    setTimeout(function () {
+      alert("Article Created!")
+      history.push("/articles")
+
+    }, 2000);
   }
 
-  // reducer
+  // login reducer
   const userLoginReducer = useSelector(state => state.userLoginReducer)
   const { userInfo } = userLoginReducer
+
+  // articleCreateReducer
+  const articleCreateReducer = useSelector(state => state.articleCreateReducer)
+  const { loading, error } = articleCreateReducer
 
   useEffect(() => {
     if (!userInfo) {
@@ -36,6 +43,8 @@ function ArticleCreatePage({ history }) {
 
   return (
     <div>
+      {loading && <span style={{ display: "flex" }}><h5>Please wait</h5><span className="ml-2"><Spinner animation="border" /></span></span>}
+      {error && <Message variant='danger'>{error}</Message>}
       <form onSubmit={onSubmit}>
         <span
           className="d-flex justify-content-center"
