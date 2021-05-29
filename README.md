@@ -98,16 +98,7 @@ Requires an Account on the Website
 after downloading/cloning the repository code follow below steps:
 
 ### Backend
-* (METHOD 1, using pipenv) (both linux and windows)
-1) Move in backend folder through terminal and run following commands,
-
-`pipenv install`
-
-`pipenv shell`
-
-`python manage.py runserver`
-
-* (METHOD 2, using python venv) (linux and windows)
+* (for both linux and windows)
 1) Move in backend folder through terminal and run following commands,
 
 `python3 -m venv env` (for windows --> `python -m venv env`) 
@@ -119,6 +110,7 @@ after downloading/cloning the repository code follow below steps:
 `python manage.py runserver` (same for both)
 
 ### Frontend
+* (for both linux and windows)
 2) Move in frontend folder through terminal and run follwing commands
 
 `npm i`
