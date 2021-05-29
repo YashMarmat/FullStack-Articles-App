@@ -17,13 +17,13 @@ function WelcomePage() {
             <span className="ml-2 home-page-title">create articles on any topic</span>
             <div style={{ display: "flex", marginTop: "20px" }}>
                 <Link to="/new-article">
-                    <button class="ml-2 btn btn-success">
+                    <button className="ml-2 btn btn-success">
                         <span>Create Now</span>
                     </button>
                     <span className="sr-only">(current)</span>
                 </Link>
                 <Link to="/articles">
-                    <button class="ml-2 btn btn-primary">
+                    <button className="ml-2 btn btn-primary">
                         <span>See all Articles</span>
                     </button>
                     <span className="sr-only">(current)</span>
