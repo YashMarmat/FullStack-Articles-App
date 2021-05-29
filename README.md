@@ -5,7 +5,8 @@
   <img src="https://github.com/YashMarmat/Pages-App-django/blob/master/templates/welcome_page_article_app.png?raw=true" width="90%">
 </p>
 
-Checkout the site in action here https://nostalgic-northcutt-95f958.netlify.app/
+Checkout the site in action here https://nostalgic-northcutt-95f958.netlify.app/ 
+* (NOTE: articles list page can take few seconds to load)
 
 # Table of contents
 - [About_this_App](#About_this_App)
