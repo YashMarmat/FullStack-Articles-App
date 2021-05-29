@@ -5,7 +5,7 @@
   <img src="https://github.com/YashMarmat/Pages-App-django/blob/master/templates/welcome_page_article_app.png?raw=true" width="90%">
 </p>
 
-Checkout the site in action here <a href="https://nostalgic-northcutt-95f958.netlify.app/" target="_blank" rel="noopener noreferrer">Deployed App</a> 
+<p>Checkout the site in action here <a href="https://nostalgic-northcutt-95f958.netlify.app/" target="_blank" rel="noopener noreferrer">Deployed App</a></p>
 * (NOTE: articles list page can take few seconds to load)
 
 # Table of contents
